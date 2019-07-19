@@ -16,7 +16,7 @@ class Enemy {
         // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    this.x = (this.x+this.speed);
+    this.x += (dt*this.speed);
     }
 
     // Draw the enemy on the screen, required method for game
@@ -47,12 +47,26 @@ class Player {
 
 const player = new Player();
 
+
+// random speed function generates number between 100-300
+const randomSpeed = function() {
+    let result;
+    do {
+    result = (Math.random() * 300);
+    }
+    while(result<100)
+
+    return result
+}
+
+// generate enemy function
+
 const allEnemies = [];
-const enemy1 = new Enemy(0,60,2);
+const enemy1 = new Enemy(0,60,randomSpeed());
 allEnemies.push(enemy1);
-const enemy2 = new Enemy(0,145,4);
+const enemy2 = new Enemy(0,145,randomSpeed());
 allEnemies.push(enemy2);
-const enemy3 = new Enemy(0,230,6);
+const enemy3 = new Enemy(0,230,randomSpeed());
 allEnemies.push(enemy3);
 // const enemy4 = new Enemy(0,300);
 // allEnemies.push(enemy4);
