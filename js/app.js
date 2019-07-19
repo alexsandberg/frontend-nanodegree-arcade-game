@@ -31,8 +31,10 @@ class Enemy {
 // a handleInput() method.
 
 class Player {
-    constructor() {
+    constructor(x,y) {
         this.character = 'images/char-boy.png';
+        this.x = x;
+        this.y = y;
     }
     update(dt) {
 
@@ -45,7 +47,7 @@ class Player {
     }
 }
 
-const player = new Player();
+const player = new Player(200,430);
 
 
 // random speed function generates number between 100-300
