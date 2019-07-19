@@ -60,16 +60,21 @@ const randomSpeed = function() {
 }
 
 // generate enemy function
+function enemyGen(y) {
+    let enemy = new Enemy(-100,y,randomSpeed());
+    allEnemies.push(enemy);
+}
 
 const allEnemies = [];
-const enemy1 = new Enemy(0,60,randomSpeed());
+
+// create first 3 enemies
+const enemy1 = new Enemy(-100,60,randomSpeed());
 allEnemies.push(enemy1);
-const enemy2 = new Enemy(0,145,randomSpeed());
+const enemy2 = new Enemy(-100,145,randomSpeed());
 allEnemies.push(enemy2);
-const enemy3 = new Enemy(0,230,randomSpeed());
+const enemy3 = new Enemy(-100,230,randomSpeed());
 allEnemies.push(enemy3);
-// const enemy4 = new Enemy(0,300);
-// allEnemies.push(enemy4);
+
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
