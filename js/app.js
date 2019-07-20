@@ -36,27 +36,45 @@ class Player {
         this.x = x;
         this.y = y;
     }
-    update(dt) {
-
+    update() {
+        this.x = this.x;
+        this.y = this.y;
     }
     render() {
         ctx.drawImage(Resources.get(this.character), this.x, this.y);
     }
     handleInput(key) {
-
+        switch(key) {
+            case 'left': {
+                this.x = this.x - 100;
+                break;
+            }
+            case 'up': {
+                this.y = this.y - 83;
+                break;
+            }
+            case 'right': {
+                this.x = this.x + 100;
+                break;
+            } 
+            case 'down': {
+                this.y = this.y + 83;
+                break;
+            }
+        }
     }
 }
 
-const player = new Player(200,430);
+const player = new Player(200,400);
 
 
-// random speed function generates number between 100-300
+// random speed function generates number between 150-300
 const randomSpeed = function() {
     let result;
     do {
     result = (Math.random() * 300);
     }
-    while(result<100)
+    while(result<150)
 
     return result
 }
