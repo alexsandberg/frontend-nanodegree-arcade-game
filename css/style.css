@@ -2,6 +2,7 @@ body {
     text-align: center;
     font-family: 'Arial', sans-serif;
     box-sizing: border-box;
+    background-color: #3498db;
 }
 
 .score-panel {
@@ -12,4 +13,9 @@ body {
     margin-left: auto;
     margin-right: auto;
     font-size: 1.4em;
+   	color: #ecf0f1;
+}
+
+.score-lives {
+	margin-bottom: 10px;
 }
