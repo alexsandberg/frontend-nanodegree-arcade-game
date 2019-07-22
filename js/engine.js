@@ -140,15 +140,8 @@ var Engine = (function(global) {
 
         renderEntities();
 
-        /* Monitor enemy position. When the enemy reaches the end of the screen,
-         * remove them from the allEnemies array and add a new enemy on that line.
-         */
-        for(let i=0; i<allEnemies.length; i++) {
-        if(allEnemies[i].x>505) {
-        enemyGen(allEnemies[i].y);
-        allEnemies.splice(i,1);
-    }
-}
+        // add new enemies
+        addEnemies();
     }
 
     /* This function is called by the render function and is called on each game

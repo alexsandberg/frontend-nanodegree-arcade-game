@@ -111,6 +111,27 @@ function enemyGen(y) {
     allEnemies.push(enemy);
 }
 
+/* Monitor enemy position. When an enemy reaches halfway, send another enemy
+ * on that line after 0-1 seconds. When the enemy reaches the end of the screen,
+ * remove them from the allEnemies array.
+ */
+ const enemyGenDelay = function(y) {
+    const delay = Math.random() * 1000;
+    setTimeout(enemyGen(y),delay);
+} 
+
+function addEnemies() {
+    for(let i=0; i<allEnemies.length; i++) {
+        // only add new enemies if there are less than 5 currently present
+        if((allEnemies[i].x>250) && (allEnemies.length<5)) {
+            enemyGenDelay(allEnemies[i].y);
+        }
+        if(allEnemies[i].x>505) {
+        allEnemies.splice(i,1);
+        }
+    }
+}
+
 const allEnemies = [];
 
 // create first 3 enemies
