@@ -101,10 +101,9 @@ class Player {
 const player = new Player();
 
 // win function
-
 function winGame() {
-    // winCounter++;
-    // document.querySelector('.score').innerHtml = winCounter;
+    winCounter++;
+    document.querySelector('.score-text').innerHTML = winCounter;
     setTimeout(function() {
         alert('You win!');
         player.reset();
