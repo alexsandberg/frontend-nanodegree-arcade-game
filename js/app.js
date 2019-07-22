@@ -49,6 +49,10 @@ class Player {
     render() {
         ctx.drawImage(Resources.get(this.character), this.x, this.y);
     }
+    reset() {
+        this.x = 200;
+        this.y = 400;
+    }
     handleInput(key) {
         switch(key) {
             case 'left': {
@@ -176,10 +180,9 @@ function checkCollisions() {
 
         // when a collision takes place
         if((Math.abs(playerX-enemyX)<80) && (Math.abs(playerY-enemyY)<50)) {
-            console.log('crash!');
+            // console.log('crash!');
             // reset player position
-            player.x = 200;
-            player.y = 400;
+            player.reset();
         }
     }
 }
