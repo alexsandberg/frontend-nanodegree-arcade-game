@@ -60,7 +60,7 @@ class Player {
                     break;
                 } else {
                     this.x = this.x - 100;
-                break;
+                    break;
                 }
             }
             case 'up': {
@@ -68,7 +68,13 @@ class Player {
                     break;
                 } else {
                     this.y = this.y - 83;
-                break;
+                    if(this.y<68) {
+                        setTimeout(function() {
+                            alert('You win!');
+                            player.reset();
+                        }, 100);
+                    }
+                    break;
                 }
             }
             case 'right': {
@@ -76,7 +82,7 @@ class Player {
                     break;
                 } else {
                     this.x = this.x + 100;
-                break;
+                    break;
                 }
             } 
             case 'down': {
@@ -84,7 +90,7 @@ class Player {
                     break;
                 } else {
                     this.y = this.y + 83;
-                break;
+                    break;
                 }
             }
         }
