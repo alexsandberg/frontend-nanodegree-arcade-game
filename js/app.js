@@ -193,7 +193,15 @@ function checkCollisions() {
 
         // when a collision takes place
         if((Math.abs(playerX-enemyX)<80) && (Math.abs(playerY-enemyY)<50)) {
-            // console.log('crash!');
+            // decrement the lives counter
+            livesCounter--;
+            document.querySelector('.lives-text').innerHTML = livesCounter;
+
+            if(livesCounter===0) {
+                setTimeout(function() {
+                    alert('Game over!')
+                }, 100);
+            }
             // reset player position
             player.reset();
         }
