@@ -69,10 +69,7 @@ class Player {
                 } else {
                     this.y = this.y - 83;
                     if(this.y<68) {
-                        setTimeout(function() {
-                            alert('You win!');
-                            player.reset();
-                        }, 100);
+                        winGame();
                     }
                     break;
                 }
@@ -103,12 +100,23 @@ class Player {
 
 const player = new Player();
 
+// win function
+
+function winGame() {
+    // winCounter++;
+    // document.querySelector('.score').innerHtml = winCounter;
+    setTimeout(function() {
+        alert('You win!');
+        player.reset();
+    }, 100);
+}
+ 
 
 // random speed function generates number between 150-500
 const randomSpeed = function() {
     let result;
     do {
-    result = (Math.random() * 500);
+        result = (Math.random() * 500);
     }
     while(result<150)
 
@@ -193,7 +201,8 @@ function checkCollisions() {
     }
 }
 
-
+let winCounter = 0;
+let livesCounter = 10;
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
