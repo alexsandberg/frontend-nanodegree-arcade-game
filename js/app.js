@@ -37,8 +37,8 @@ class Player {
         this.y = y;
     }
     update() {
-        this.x = this.x;
-        this.y = this.y;
+        // this.x = this.x;
+        // this.y = this.y;
     }
     render() {
         ctx.drawImage(Resources.get(this.character), this.x, this.y);
@@ -46,20 +46,36 @@ class Player {
     handleInput(key) {
         switch(key) {
             case 'left': {
-                this.x = this.x - 100;
+                if(this.x===0) {
+                    break;
+                } else {
+                    this.x = this.x - 100;
                 break;
+                }
             }
             case 'up': {
-                this.y = this.y - 83;
+                if(this.y<0){
+                    break;
+                } else {
+                    this.y = this.y - 83;
                 break;
+                }
             }
             case 'right': {
-                this.x = this.x + 100;
+                if(this.x===400) {
+                    break;
+                } else {
+                    this.x = this.x + 100;
                 break;
+                }
             } 
             case 'down': {
-                this.y = this.y + 83;
+                if(this.y===400) {
+                    break;
+                } else {
+                    this.y = this.y + 83;
                 break;
+                }
             }
         }
     }
