@@ -105,29 +105,49 @@ const randomSpeed = function() {
     return result
 }
 
+// function for choosing random line for enemy generation
+function randomLine() {
+    // chose line 60, 145, or 230 (y grid location)
+    if(Math.random()<=0.33) {
+        return 60;
+    } else if((Math.random()>0.33)&&(Math.random()<=0.66)) {
+        return 145;
+    } else {
+        return 230;
+    }
+}
+
+// enemy counters
+let enemiesNum = [];
+enemiesNum[60] = 1;
+enemiesNum[145] = 1;
+enemiesNum[230] = 1;
+
 // generate enemy function
-function enemyGen(y) {
-    let enemy = new Enemy(-100,y,randomSpeed());
+function enemyGen(num) {
+    let enemy = new Enemy(-100,num,randomSpeed());
     allEnemies.push(enemy);
 }
 
-/* Monitor enemy position. When an enemy reaches halfway, send another enemy
- * on that line after 0-1 seconds. When the enemy reaches the end of the screen,
- * remove them from the allEnemies array.
+/* Monitor enemy position. When an enemy reaches halfway, send another enemy.
+ * When the enemy reaches the end of the screen, remove them from the allEnemies array.
  */
- const enemyGenDelay = function(y) {
-    const delay = Math.random() * 1000;
-    setTimeout(enemyGen(y),delay);
-} 
-
 function addEnemies() {
     for(let i=0; i<allEnemies.length; i++) {
-        // only add new enemies if there are less than 5 currently present
-        if((allEnemies[i].x>250) && (allEnemies.length<5)) {
-            enemyGenDelay(allEnemies[i].y);
+        const line = randomLine(); // get a random line
+
+        // only add new enemies if there are less than 4 total currently present
+        // and if there are less than 2 on the line
+        if((allEnemies[i].x>250) && (allEnemies.length<4) && (enemiesNum[line]<2)) {
+            enemyGen(line);
+            // add 1 to appropriate counter
+            enemiesNum[line]++;
         }
         if(allEnemies[i].x>505) {
-        allEnemies.splice(i,1);
+            //remove 1 from appropriate counter
+            enemiesNum[allEnemies[i].y]--;   
+            // remove from allEnemies array when end of screen is reached
+            allEnemies.splice(i,1);
         }
     }
 }
