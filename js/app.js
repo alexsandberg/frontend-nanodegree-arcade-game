@@ -98,11 +98,11 @@ class Player {
 const player = new Player(200,400);
 
 
-// random speed function generates number between 150-300
+// random speed function generates number between 150-500
 const randomSpeed = function() {
     let result;
     do {
-    result = (Math.random() * 300);
+    result = (Math.random() * 500);
     }
     while(result<150)
 
