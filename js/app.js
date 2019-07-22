@@ -174,8 +174,12 @@ function checkCollisions() {
     for(let enemy of allEnemies) {
         const [enemyX, enemyY] = enemy.getPosition();
 
+        // when a collision takes place
         if((Math.abs(playerX-enemyX)<80) && (Math.abs(playerY-enemyY)<50)) {
             console.log('crash!');
+            // reset player position
+            player.x = 200;
+            player.y = 400;
         }
     }
 }
