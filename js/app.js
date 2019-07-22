@@ -23,6 +23,12 @@ class Enemy {
     render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
+
+    // get the enemy position
+    getPosition() {
+        const position = [this.x, this.y];
+        return position;
+    }
 }
 
 
@@ -79,6 +85,10 @@ class Player {
             }
         }
     }
+    getPosition() {
+        const position = [this.x, this.y];
+        return position;
+    }
 }
 
 const player = new Player(200,400);
@@ -115,6 +125,19 @@ allEnemies.push(enemy3);
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
+
+// check for collisions between player and enemies
+function checkCollisions() {
+    const [playerX, playerY] = player.getPosition();
+
+    for(let enemy of allEnemies) {
+        const [enemyX, enemyY] = enemy.getPosition();
+
+        if((Math.abs(playerX-enemyX)<80) && (Math.abs(playerY-enemyY)<50)) {
+            console.log('crash!');
+        }
+    }
+}
 
 
 
