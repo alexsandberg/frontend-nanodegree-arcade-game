@@ -13,6 +13,10 @@ body {
     background-color: #3498db;
 }
 
+/********************
+ * Score panel syles 
+ *******************/
+
 .score-panel {
 	/*display: block;*/
 	text-align: left;
@@ -40,10 +44,15 @@ body {
 	display: inline-block;
 }
 
+/**************************************
+ * Game menu & player selection styles
+ *************************************/
+
 .player-select {
+	box-sizing: inherit;
 	position: fixed;
 	width: 600px;
-	height: 360px;
+	height: 600px;
 	box-shadow: 10px;
 	background-color: rgba(255, 255, 255, 0.95);
 	margin-left: auto;
@@ -60,8 +69,16 @@ body {
 }
 
 .player-select h2 {
-	transform: translateY(-20px);
 	text-transform: uppercase;
+}
+
+#player-title {
+	transform: translateY(-20px);
+	padding-top: 35px;
+}
+
+#difficulty-title {
+
 }
 
 .player-list {
@@ -95,4 +112,20 @@ body {
     display: inline-block;
     background-color: #2980b9;
     border-radius: 10px;
+}
+
+
+/* difficulty radio group */
+
+.radio-label {
+	font-size: 22px;
+	flex-direction: row;
+	width: 200px;
+	display: inline-block;
+}
+
+ input[type=radio] {
+    border: 0px;
+    width: 100%;
+    height: 2em;
 }
