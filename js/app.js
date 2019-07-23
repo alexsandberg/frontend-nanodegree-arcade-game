@@ -110,12 +110,15 @@ function winGame() {
     }, 100);
 }
  
+// game defaults to normal mode
+let maxSpeed = 500;
+let maxEnemies = 4;
 
-// random speed function generates number between 150-500
+// random speed function generates number between 150-maxSpeed
 const randomSpeed = function() {
     let result;
     do {
-        result = (Math.random() * 500);
+        result = (Math.random() * maxSpeed);
     }
     while(result<150)
 
@@ -153,9 +156,9 @@ function addEnemies() {
     for(let i=0; i<allEnemies.length; i++) {
         const line = randomLine(); // get a random line
 
-        // only add new enemies if there are less than 4 total currently present
+        // only add new enemies if there are less than (maxEnemies) total currently present
         // and if there are less than 2 on the line
-        if((allEnemies[i].x>250) && (allEnemies.length<4) && (enemiesNum[line]<2)) {
+        if((allEnemies[i].x>250) && (allEnemies.length<maxEnemies) && (enemiesNum[line]<2)) {
             enemyGen(line);
             // add 1 to appropriate counter
             enemiesNum[line]++;
@@ -248,4 +251,18 @@ const playButton = document.getElementById('play-button');
 
 playButton.addEventListener('click', function(e) {
     document.querySelector('.player-select').classList.add('hide');
+    gameMode(); // get game mode
 })
+
+
+//function for choosing difficulty mode 
+function gameMode() {
+    if(document.getElementById('normal-mode').checked) {
+        // default is normal mode
+    } else {
+        // hard mode
+        maxSpeed = 700;
+        maxEnemies = 5;
+    }
+}
+
