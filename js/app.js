@@ -314,6 +314,7 @@ const leaderboard = new Map();
 let leaderSorted;
 
 let leaderTable = document.querySelector('.leader-table');
+let tableHead = leaderTable.createTHead();
 
 // sort the leaderboard based on score (value)
 function scoresSort() {
@@ -323,22 +324,26 @@ function scoresSort() {
 
 // display leaderboard 
 function displayLeaderboard() {
-    let iteratorObjForKeys = leaderSorted.keys();
-    let iteratorObjForValues = leaderSorted.values();
-    for(let i=0; i<6; i++) {
-        let entry = document.createElement('tr');
+    let keys =[ ...leaderSorted.keys() ];
+    let values =[ ...leaderSorted.values() ];
+    for(let i=1; i<6; i++) {
+        let entry = tableHead.insertRow();
         let number = document.createElement('td');
         let name = document.createElement('td');
         let score = document.createElement('td');
         
         number.innerHTML = `${i}.`;
-        name.innerHTML = iteratorObjForKeys.next();
-        score.innerHTML = iteratorObjForValues.next();
+        name.innerHTML = keys[i-1];
+        score.innerHTML = values[i-1];
 
         entry.appendChild(number);
         entry.appendChild(name);
         entry.appendChild(score);
         leaderTable.appendChild(entry);
+
+        if(keys[i]===undefined) {
+            break;
+        }
     }
 }
 
