@@ -105,9 +105,13 @@ function winGame() {
     winCounter++;
     document.querySelector('.score-text').innerHTML = winCounter;
     setTimeout(function() {
-        alert('You win!');
+        // alert('You win!');
         player.reset();
     }, 100);
+}
+
+function playAgain() {
+
 }
  
 // game defaults to normal mode
@@ -247,11 +251,24 @@ for(let tempPlayer of players) {
     });
 }
 
+let playerName;
+let gameCounter = 1;
+
+function setPlayerName() {
+    let input = document.getElementById('name').value;
+    if(input==="") {
+        playerName = `player-${gameCounter}`;
+    } else {
+        playerName = input;
+    }
+}
+
 const playButton = document.getElementById('play-button');
 
 playButton.addEventListener('click', function(e) {
     document.querySelector('.player-select').classList.add('hide');
     gameMode(); // get game mode
+    setPlayerName(); // set player name 
 })
 
 
@@ -265,4 +282,6 @@ function gameMode() {
         maxEnemies = 5;
     }
 }
+
+
 
