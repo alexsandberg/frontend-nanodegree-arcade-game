@@ -243,3 +243,9 @@ for(let tempPlayer of players) {
         playerSelection(tempPlayer)
     });
 }
+
+const playButton = document.getElementById('play-button');
+
+playButton.addEventListener('click', function(e) {
+    document.querySelector('.player-select').classList.add('hide');
+})
