@@ -110,6 +110,21 @@ function winGame() {
     }, 100);
 }
 
+// game over
+function gameOver() {
+    // alert('Game over!')
+    document.querySelector('.game-over').classList.remove('hide');
+
+    // update score text
+    document.querySelector('.score-text-over').innerHTML = winCounter;
+
+    //get score
+    leaderboard.set(playerName, winCounter);
+
+    // sort the leaderboard
+    scoresSort();
+}
+
 function playAgain() {
 
 }
@@ -206,7 +221,7 @@ function checkCollisions() {
 
             if(livesCounter===0) {
                 setTimeout(function() {
-                    alert('Game over!')
+                    gameOver();
                 }, 100);
             }
             // reset player position
@@ -263,12 +278,20 @@ function setPlayerName() {
     }
 }
 
+// button listeners
 const playButton = document.getElementById('play-button');
 
 playButton.addEventListener('click', function(e) {
     document.querySelector('.player-select').classList.add('hide');
     gameMode(); // get game mode
     setPlayerName(); // set player name 
+})
+
+const playAgainButton = document.getElementById('play-again');
+
+playAgainButton.addEventListener('click', function(e) {
+    document.querySelector('.game-over').classList.add('hide');
+    document.querySelector('.player-select').classList.remove('hide');
 })
 
 
@@ -287,5 +310,7 @@ function gameMode() {
 const leaderboard = new Map();
 
 // sort the leaderboard based on score (value)
-const leaderSorted = new Map([...leaderboard.entries()].sort((a, b) => b[1] - a[1]));
+function scoresSort() {
+    const leaderSorted = new Map([...leaderboard.entries()].sort((a, b) => b[1] - a[1]));
+} 
 
