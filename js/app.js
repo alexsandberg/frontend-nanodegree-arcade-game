@@ -283,5 +283,9 @@ function gameMode() {
     }
 }
 
+// variable for storing scores
+const leaderboard = new Map();
 
+// sort the leaderboard based on score (value)
+const leaderSorted = new Map([...leaderboard.entries()].sort((a, b) => b[1] - a[1]));
 
