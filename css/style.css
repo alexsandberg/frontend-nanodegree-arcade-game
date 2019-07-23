@@ -51,7 +51,8 @@ body {
 
 .player-select {
 	box-sizing: inherit;
-	position: fixed;
+	position: absolute;
+	top: 0;
 	width: 600px;
 	height: 600px;
 	box-shadow: 10px;
@@ -143,7 +144,8 @@ body {
 
 .game-over {
 	box-sizing: inherit;
-	position: fixed;
+	position: absolute;
+	top: 30px;
 	width: 300px;
 	height: 300px;
 	box-shadow: 10px;
