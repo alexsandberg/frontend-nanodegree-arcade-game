@@ -7,13 +7,21 @@
 </head>
 <body>
 	<div class="player-select">
+		<h2 id="name-title">Enter your name</h2>
+		<div class="row">
+              <label for="name">Name</label>
+              <input type="text" name="name" id="name">
+            </div>
 		<h2 id="difficulty-title">Choose your difficulty</h2>
-		<label class="radio-label">Normal Mode
-		  	<input id="normal-mode" type="radio" checked="checked" name="radio">
-		</label>
-		<label class="radio-label">Hard Mode
-		  	<input id="hard-mode" type="radio" name="radio">
-		</label>
+		<div class="row">
+			<label class="radio-label">Normal Mode
+		  		<input id="normal-mode" type="radio" checked="checked" name="radio">
+			</label>
+			<label class="radio-label">Hard Mode
+		  		<input id="hard-mode" type="radio" name="radio">
+			</label>
+		</div>
+		
 		<h2 id="player-title">Select your player</h2>
 		<ul class="player-list">
 			<li id="images/char-boy.png" class="player-image selection">
