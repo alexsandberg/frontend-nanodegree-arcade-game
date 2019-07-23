@@ -123,6 +123,9 @@ function gameOver() {
 
     // sort the leaderboard
     scoresSort();
+
+    // display the leaderboard
+    displayLeaderboard();
 }
 
 function playAgain() {
@@ -306,11 +309,36 @@ function gameMode() {
     }
 }
 
-// variable for storing scores
+// variables for storing scores
 const leaderboard = new Map();
+let leaderSorted;
+
+let leaderTable = document.querySelector('.leader-table');
 
 // sort the leaderboard based on score (value)
 function scoresSort() {
-    const leaderSorted = new Map([...leaderboard.entries()].sort((a, b) => b[1] - a[1]));
+    leaderSorted = new Map([...leaderboard.entries()].sort((a, b) => b[1] - a[1]));
 } 
+
+
+// display leaderboard 
+function displayLeaderboard() {
+    let iteratorObjForKeys = leaderSorted.keys();
+    let iteratorObjForValues = leaderSorted.values();
+    for(let i=0; i<6; i++) {
+        let entry = document.createElement('tr');
+        let number = document.createElement('td');
+        let name = document.createElement('td');
+        let score = document.createElement('td');
+        
+        number.innerHTML = `${i}.`;
+        name.innerHTML = iteratorObjForKeys.next();
+        score.innerHTML = iteratorObjForValues.next();
+
+        entry.appendChild(number);
+        entry.appendChild(name);
+        entry.appendChild(score);
+        leaderTable.appendChild(entry);
+    }
+}
 
