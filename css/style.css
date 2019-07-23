@@ -53,11 +53,15 @@ body {
     flex-wrap: wrap;*/
     box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
     border-radius: 10px;
-	/*display: none;*/
+	
+}
+
+.hide {
+	display: none;
 }
 
 .player-select h2 {
-	transform: translateY(10px);
+	transform: translateY(-20px);
 	text-transform: uppercase;
 }
 
@@ -76,10 +80,11 @@ body {
     align-items: center;
 }
 
-/*.button-wrap {
-	width: 100%;
-	display: block;
-}*/
+.selection {
+	border-color: #2980b9;
+	border-style: solid;
+	border-width: 3px;
+}
 
 #play-button {
 	font-size: 22px;

@@ -98,7 +98,7 @@ class Player {
     }
 }
 
-const player = new Player();
+let player = new Player();
 
 // win function
 function winGame() {
@@ -223,3 +223,23 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+
+const players = document.querySelectorAll('.player-image');
+const selected = [players[0]]; // selected defaults with first character
+
+function playerSelection(tempPlayer) {
+    // toggle selected class
+    selected[0].classList.remove('selection');
+    selected.pop();
+    selected.push(tempPlayer);
+    selected[0].classList.add('selection');
+    player.character = tempPlayer.id;
+} 
+
+// adds event listeners to character options on selection screen
+for(let tempPlayer of players) {
+    tempPlayer.addEventListener('click', function(e) {
+        playerSelection(tempPlayer)
+    });
+}
