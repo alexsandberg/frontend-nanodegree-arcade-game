@@ -100,7 +100,7 @@ class Player {
 
 let player = new Player();
 
-// win function
+// win function is called when water is reached
 function winGame() {
     winCounter++;
     document.querySelector('.score-text').innerHTML = winCounter;
@@ -118,7 +118,7 @@ function gameOver() {
     // update score text
     document.querySelector('.score-text-over').innerHTML = winCounter;
 
-    //get score
+    // get score
     leaderboard.set(playerName, winCounter);
 
     // sort the leaderboard
@@ -126,10 +126,6 @@ function gameOver() {
 
     // display the leaderboard
     displayLeaderboard();
-}
-
-function playAgain() {
-
 }
  
 // game defaults to normal mode
@@ -292,9 +288,19 @@ playButton.addEventListener('click', function(e) {
 
 const playAgainButton = document.getElementById('play-again');
 
-playAgainButton.addEventListener('click', function(e) {
+function playAgain() {
     document.querySelector('.game-over').classList.add('hide');
     document.querySelector('.player-select').classList.remove('hide');
+
+    // reset and redisplay lives and score counters
+    livesCounter = 10; 
+    document.querySelector('.lives-text').innerHTML = livesCounter;
+    winCounter = 0;
+    document.querySelector('.score-text').innerHTML = winCounter;
+}
+
+playAgainButton.addEventListener('click', function(e) {
+    playAgain();
 })
 
 
