@@ -205,7 +205,12 @@ body {
 	margin-bottom: 10px;
 }
 
- #leader-table {
+.table-container {
+	display: inline-block;
+}
+
+ #leader-table-normal,
+ #leader-table-hard {
     width: 35%;
     display: grid;
     margin-right: auto;

@@ -118,14 +118,15 @@ function gameOver() {
     // update score text
     document.querySelector('.score-text-over').innerHTML = winCounter;
 
-    // get score
-    leaderboard.set(playerName, winCounter);
+    // set score and display sorted leaderboards
+    if(difficulty===true) {
+        topScoresNormal.setScores(playerName, winCounter);
+        displayLeaderboard(scoresSort(topScoresNormal.getScores())); 
 
-    // sort the leaderboard
-    scoresSort();
-
-    // display the leaderboard
-    displayLeaderboard();
+    } else {
+        topScoresHard.setScores(playerName, winCounter);
+        displayLeaderboard(scoresSort(topScoresHard.getScores()));
+    }   
 }
  
 // game defaults to normal mode
@@ -303,37 +304,89 @@ playAgainButton.addEventListener('click', function(e) {
     playAgain();
 })
 
+function setDifficulty(bool) {
+    // true for normal mode, false for hard
+    let difficulty = bool;
 
-//function for choosing difficulty mode 
+    return difficulty;
+}
+
+let difficulty;
+
+//function for choosing difficulty mode     
 function gameMode() {
     if(document.getElementById('normal-mode').checked) {
-        // default is normal mode
+        difficulty = setDifficulty(true);
+        maxSpeed = 500;
+        maxEnemies = 4;
     } else {
         // hard mode
+        difficulty = setDifficulty(false);
         maxSpeed = 700;
         maxEnemies = 5;
     }
 }
 
-// variables for storing scores
-const leaderboard = new Map();
-let leaderSorted;
+// class for creating leaderboards
+class Leaderboard {
+    constructor() {
+        this.topScores = new Map();
+    }
 
-let leaderTable = document.querySelector('.leader-table');
-let tableHead = leaderTable.createTHead();
+    setScores(playerName, winCounter) {
+        this.topScores.set(playerName, winCounter);
+    }
+
+    getScores() {
+        return this.topScores;
+    }
+}
+
+// create leaderboards for both game modes
+const topScoresNormal = new Leaderboard();
+const topScoresHard = new Leaderboard();
+
+// function for storing scores
+// function topScores() {
+//     const leaderboard = new Map();
+
+//     return function(playerName, winCounter) {
+//             leaderboard.set(playerName, winCounter);
+//         }
+// }
+
+// let setScores = topScores();
+
+
+let leaderTableNormal = document.querySelector('.leader-table-normal');
+let leaderTableHard = document.querySelector('.leader-table-hard');
+let tableNormalHead = leaderTableNormal.createTHead();
+let tableHardHead = leaderTableHard.createTHead();
 
 // sort the leaderboard based on score (value)
-function scoresSort() {
-    leaderSorted = new Map([...leaderboard.entries()].sort((a, b) => b[1] - a[1]));
+function scoresSort(board) {
+    let leaderSorted = new Map([...board.entries()].sort((a, b) => b[1] - a[1]));
+    return leaderSorted;
 } 
 
 
 // display leaderboard 
-function displayLeaderboard() {
-    let keys =[ ...leaderSorted.keys() ];
-    let values =[ ...leaderSorted.values() ];
+function displayLeaderboard(board) {
+    let keys =[ ...board.keys() ];
+    let values =[ ...board.values() ];
+
+    let currentHead;
+    let currentTable;
+    if(difficulty===true) {
+        currentHead = tableNormalHead;
+        currentTable = leaderTableNormal;
+    } else {
+        currentHead = tableHardHead;
+        currentTable = leaderTableHard;
+    }
+
     for(let i=1; i<6; i++) {
-        let entry = tableHead.insertRow();
+        let entry = currentHead.insertRow();
         let number = document.createElement('td');
         let name = document.createElement('td');
         let score = document.createElement('td');
@@ -345,7 +398,7 @@ function displayLeaderboard() {
         entry.appendChild(number);
         entry.appendChild(name);
         entry.appendChild(score);
-        leaderTable.appendChild(entry);
+        currentTable.appendChild(entry);
 
         if(keys[i]===undefined) {
             break;
