@@ -207,6 +207,8 @@ body {
 
 .table-container {
 	display: inline-block;
+	margin-left: 20px;
+	margin-right: 20px;
 }
 
  #leader-table-normal,
@@ -217,8 +219,9 @@ body {
     margin-left: auto;
 }
 
-#table-header td {
+td {
 	text-align: left;
+	padding-right: 18px;
 }
 
 .table-name,
