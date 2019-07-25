@@ -115,6 +115,9 @@ function gameOver() {
     // increment gameCounter
     gameCounter++;
 
+    // remove keyup listener
+    document.removeEventListener('keyup', listenerFunc);
+
     document.querySelector('.game-over').classList.remove('hide');
 
     // update game over text
@@ -238,9 +241,14 @@ function checkCollisions() {
 let winCounter = 0;
 let livesCounter = 10;
 
+
 // This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
-document.addEventListener('keyup', function(e) {
+// Player.handleInput() method.
+function addListener() {
+    document.addEventListener('keyup', listenerFunc);
+}
+
+function listenerFunc(e) {
     var allowedKeys = {
         37: 'left',
         38: 'up',
@@ -249,7 +257,7 @@ document.addEventListener('keyup', function(e) {
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
-});
+};
 
 
 const players = document.querySelectorAll('.player-image');
@@ -290,6 +298,7 @@ playButton.addEventListener('click', function(e) {
     document.querySelector('.player-select').classList.add('hide');
     gameMode(); // get game mode
     setPlayerName(); // set player name 
+    addListener(); // add keyboard listener for gameplay
 })
 
 const playAgainButton = document.getElementById('play-again');
@@ -351,26 +360,6 @@ class Leaderboard {
 // create leaderboards for both game modes
 const topScoresNormal = new Leaderboard();
 const topScoresHard = new Leaderboard();
-
-// topScoresNormal.setScores('test1', 10);
-// topScoresNormal.setScores('test2', 10);
-// topScoresNormal.setScores('test3', 10);
-// topScoresNormal.setScores('test4', 10);
-
-// compare score to top scores
-// function checkScores(score,board) {
-//     if(board.size<5) {
-//         board.setScores(playerName, score);
-//     } else {
-//         let values =[ ...board.values() ];
-//         for(let value of values) {
-//             if (score>value) {
-//                 board.setScores(playerName, score);
-//                 break;
-//             }
-//         }
-//     }
-// }
 
 let leaderTableNormal = document.querySelector('.leader-table-normal');
 let leaderTableHard = document.querySelector('.leader-table-hard');
