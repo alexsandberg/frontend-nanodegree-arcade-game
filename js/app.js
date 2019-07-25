@@ -1,5 +1,4 @@
 // Enemies our player must avoid
-
 class Enemy {
     constructor(x, y, speed) {
     // Variables applied to each of our instances go here,
@@ -32,10 +31,7 @@ class Enemy {
 }
 
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
-
+// Player class
 class Player {
     constructor(x=200,y=400) {
         this.character = 'images/char-boy.png';
@@ -43,8 +39,7 @@ class Player {
         this.y = y;
     }
     update() {
-        // this.x = this.x;
-        // this.y = this.y;
+        // ??
     }
     render() {
         ctx.drawImage(Resources.get(this.character), this.x, this.y);
@@ -104,6 +99,16 @@ let player = new Player();
 function winGame() {
     winCounter++;
     document.querySelector('.score-text').innerHTML = winCounter;
+
+    // show score +1 title
+    document.querySelector('.win-title').classList.remove('hide');
+    document.querySelector('.win-title').classList.add('win');
+
+    setTimeout(function() {
+        document.querySelector('.win-title').classList.add('hide');
+        document.querySelector('.win-title').classList.remove('win');
+    }, 1500);
+
     setTimeout(function() {
         // alert('You win!');
         player.reset();
@@ -431,7 +436,7 @@ function displayLeaderboard(sortedScores) {
     header.appendChild(nameTitle);
     header.appendChild(scoreTitle);
 
-    for(let i=1; i<(sortedScores.length+1); i++) { ///////////////////////////////
+    for(let i=1; i<(sortedScores.length+1); i++) { 
         let entry = currentHead.insertRow();
         let number = document.createElement('td');
         let name = document.createElement('td');
@@ -445,10 +450,6 @@ function displayLeaderboard(sortedScores) {
         entry.appendChild(name);
         entry.appendChild(score);
         currentTable.appendChild(entry);
-
-        // if(keys[i]===undefined) {
-        //     break;
-        // }
     }
 }
 

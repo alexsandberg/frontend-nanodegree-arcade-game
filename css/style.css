@@ -46,6 +46,27 @@ body {
 	display: inline-block;
 }
 
+.win-title {
+	position: fixed;
+	display: inline-block;
+	margin-top: 0;
+	margin-left: 70px;
+}
+
+.win-title.win {
+    animation-name: pop;
+    animation-duration: 500ms;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes pop {
+  0% {transform: scale(0.2);}
+  20% {transform: scale(1.2)}
+  /*50% {transform: skew(-10deg, -10deg);}*/
+  100% {transform: scale(1);}
+}
+
 /**************************************
  * Game menu & player selection styles
  *************************************/
@@ -234,4 +255,6 @@ td {
 	padding-left: 10px;
 	padding-right: 80px;
 }
+
+
 
