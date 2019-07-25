@@ -38,8 +38,9 @@ class Player {
         this.x = x;
         this.y = y;
     }
-    update() {
-        // ??
+    update(movementX=this.x, movementY=this.y) {
+        this.x = movementX;
+        this.y = movementY;
     }
     render() {
         ctx.drawImage(Resources.get(this.character), this.x, this.y);
@@ -49,13 +50,14 @@ class Player {
         this.y = 400;
     }
     handleInput(key) {
+        let movement;
         switch(key) {
             case 'left': {
                 if(this.x===0) {
                     break;
                 } else {
-                    this.x = this.x - 100;
-                    //getGridPos(this.x,this.y);
+                    movement = this.x - 100;
+                    this.update(movement,this.y);
                     break;
                 }
             }
@@ -63,8 +65,8 @@ class Player {
                 if(this.y<0){
                     break;
                 } else {
-                    this.y = this.y - 83;
-                    //getGridPos(this.x,this.y);
+                    movement = this.y - 83;
+                    this.update(this.x,movement);
                     if(this.y<68) {
                         winGame();
                     }
@@ -75,8 +77,8 @@ class Player {
                 if(this.x===400) {
                     break;
                 } else {
-                    this.x = this.x + 100;
-                   // getGridPos(this.x,this.y);
+                    movement = this.x + 100;
+                    this.update(movement,this.y);
                     break;
                 }
             } 
@@ -84,8 +86,8 @@ class Player {
                 if(this.y===400) {
                     break;
                 } else {
-                    this.y = this.y + 83;
-                    //getGridPos(this.x,this.y);
+                    movement = this.y + 83;
+                    this.update(this.x,movement);
                     break;
                 }
             }
