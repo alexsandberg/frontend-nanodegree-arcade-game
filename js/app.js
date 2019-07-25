@@ -259,18 +259,18 @@ let livesCounter = 10;
 //234, 151, 68
 
 const gameCoordinates = 
-    [[20,266],[20,183],[20,100],
-    [120,266],[120,183],[120,100],
-    [220,266],[220,183],[220,100],
-    [320,266],[320,183],[320,100],
-    [420,266],[420,183],[420,100]];
+    [[20,100,0],[20,183,1],[20,266,2],
+    [120,100,3],[120,183,4],[120,266,5],
+    [220,100,6],[220,183,7],[220,266,8],
+    [320,100,9],[320,183,10],[320,266,11],
+    [420,100,12],[420,183,13],[420,266,14]];
 
 let activeGrid = 
-    [[20,266],[20,183],[20,100],
-    [120,266],[120,183],[120,100],
-    [220,266],[220,183],[220,100],
-    [320,266],[320,183],[320,100],
-    [420,266],[420,183],[420,100]];
+    [[20,100,0],[20,183,1],[20,266,2],
+    [120,100,3],[120,183,4],[120,266,5],
+    [220,100,6],[220,183,7],[220,266,8],
+    [320,100,9],[320,183,10],[320,266,11],
+    [420,100,12],[420,183,13],[420,266,14]];
 
 let allGems = [];
 
@@ -301,16 +301,24 @@ class Gem {
 function randomPos() {
     let gridPos = randomGemNum(15); // 15 possible positions
     if(!(activeGrid[gridPos]===null)) {
-        let [x,y] = activeGrid[gridPos];
+        let [x,y,index] = activeGrid[gridPos];
 
         // set selected grid position to null
         activeGrid[gridPos] = null;
-        return [x,y];
+        return [x,y,index];
     } else {
         // console.log('gem skipped');
         return null;
     }
     
+}
+
+function removeGems(index,gridIndex) {
+    // remove gem after 30 seconds and reset grid place
+    setTimeout(function(gemIndex) {
+        allGems.splice(gemIndex,1);
+        activeGrid[gridIndex] = gameCoordinates[gridIndex];
+    }, 30000);
 }
 
 function randomGemNum(num) {
@@ -323,9 +331,13 @@ function addGems() {
     if(randomGemNum(1000)===29) {
         let pos = randomPos();
         if(!(pos===null)) {
-            let [x,y] = pos;
+            let [x,y,gridIndex] = pos;
             let blueGem = new Gem(blue,x,y);
             allGems.push(blueGem);
+
+            // remove gem after 30 sec
+            let gemIndex = allGems.length;
+            removeGems(gemIndex,gridIndex);
         }
     }
 
@@ -333,9 +345,13 @@ function addGems() {
     if(randomGemNum(5000)===29) {
         let pos = randomPos();
         if(!(pos===null)) {
-            let [x,y] = randomPos();
+            let [x,y,gridIndex] = pos;
             let greenGem = new Gem(green,x,y);
             allGems.push(greenGem);
+
+            // remove gem after 30 sec
+            let gemIndex = allGems.length;
+            removeGems(gemIndex,gridIndex);
         }
     }
 
@@ -343,9 +359,13 @@ function addGems() {
     if(randomGemNum(8000)===29) {
         let pos = randomPos();
         if(!(pos===null)) {
-            let [x,y] = randomPos();
+            let [x,y,gridIndex] = pos;
             let orangeGem = new Gem(orange,x,y);
             allGems.push(orangeGem);
+
+            // remove gem after 30 sec
+            let gemIndex = allGems.length;
+            removeGems(gemIndex,gridIndex);
         }
     }
 }
