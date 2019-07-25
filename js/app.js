@@ -115,8 +115,10 @@ function gameOver() {
     // increment gameCounter
     gameCounter++;
 
-    // alert('Game over!')
     document.querySelector('.game-over').classList.remove('hide');
+
+    // update game over text
+    document.getElementById('over-text-message').innerHTML = `Nice job, ${playerName}!`;
 
     // update score text
     document.querySelector('.score-text-over').innerHTML = winCounter;
