@@ -265,6 +265,13 @@ const gameCoordinates =
     [320,266],[320,183],[320,100],
     [420,266],[420,183],[420,100]];
 
+let activeGrid = 
+    [[20,266],[20,183],[20,100],
+    [120,266],[120,183],[120,100],
+    [220,266],[220,183],[220,100],
+    [320,266],[320,183],[320,100],
+    [420,266],[420,183],[420,100]];
+
 let allGems = [];
 
 const blue = 'images/Gem Blue.png';
@@ -293,8 +300,17 @@ class Gem {
 // get random positon for gem placement
 function randomPos() {
     let gridPos = randomGemNum(15); // 15 possible positions
-    let [x,y] = gameCoordinates[gridPos];
-    return [x,y];
+    if(!(activeGrid[gridPos]===null)) {
+        let [x,y] = activeGrid[gridPos];
+
+        // set selected grid position to null
+        activeGrid[gridPos] = null;
+        return [x,y];
+    } else {
+        // console.log('gem skipped');
+        return null;
+    }
+    
 }
 
 function randomGemNum(num) {
@@ -305,23 +321,32 @@ function randomGemNum(num) {
 function addGems() {
     // blue gems
     if(randomGemNum(1000)===29) {
-        let [x,y] = randomPos();
-        let blueGem = new Gem(blue,x,y);
-        allGems.push(blueGem);
+        let pos = randomPos();
+        if(!(pos===null)) {
+            let [x,y] = pos;
+            let blueGem = new Gem(blue,x,y);
+            allGems.push(blueGem);
+        }
     }
 
     // green gems
     if(randomGemNum(5000)===29) {
-        let [x,y] = randomPos();
-        let greenGem = new Gem(green,x,y);
-        allGems.push(greenGem);
+        let pos = randomPos();
+        if(!(pos===null)) {
+            let [x,y] = randomPos();
+            let greenGem = new Gem(green,x,y);
+            allGems.push(greenGem);
+        }
     }
 
     // orange gems
     if(randomGemNum(8000)===29) {
-        let [x,y] = randomPos();
-        let orangeGem = new Gem(orange,x,y);
-        allGems.push(orangeGem);
+        let pos = randomPos();
+        if(!(pos===null)) {
+            let [x,y] = randomPos();
+            let orangeGem = new Gem(orange,x,y);
+            allGems.push(orangeGem);
+        }
     }
 }
 
