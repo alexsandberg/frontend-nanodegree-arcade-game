@@ -112,7 +112,9 @@ function winGame() {
 
 // game over
 function gameOver() {
-    //debugger;
+    // increment gameCounter
+    gameCounter++;
+    
     // alert('Game over!')
     document.querySelector('.game-over').classList.remove('hide');
 
