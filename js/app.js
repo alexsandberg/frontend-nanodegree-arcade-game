@@ -99,19 +99,40 @@ class Player {
 
 let player = new Player();
 
+let tempScores = [];
+
+let scoreTimeout;
+
 function scoreText(score) {
+    // clear any present timeouts
+    clearTimeout(scoreTimeout);
+
     const winText = document.querySelector('.win-title');
 
-    // set title text
-    winText.innerHTML = `Score +${score}!`
+    tempScores.push(score);
+
+    // if title is already open, add the scores
+    if(!(winText.classList.contains('hide'))) {
+        let total = 0;
+        for (let score of tempScores) {
+            total += score;
+        }
+
+        // set title text
+        winText.innerHTML = `Score +${total}!`
+    } else {
+        // set title text
+        winText.innerHTML = `Score +${score}!`
+    }
 
     // show score title
     winText.classList.remove('hide');
     winText.classList.add('win');
 
-    setTimeout(function() {
+    scoreTimeout = setTimeout(function() {
         winText.classList.add('hide');
         winText.classList.remove('win');
+        tempScores = [];
     }, 1500);
 }
 
