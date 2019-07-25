@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-	<div class="player-select">
+	<div class="player-select" tabindex="-1">
 		<h2 id="name-title">Enter your name</h2>
 		<div class="row">
               <label for="name">Name</label>
@@ -25,24 +25,40 @@
 		<h2 id="player-title">Select your player</h2>
 		<ul class="player-list">
 			<li id="images/char-boy.png" class="player-image selection">
-				<img src="images/char-boy.png" alt="boy character">
+				<label>
+					<input type="radio" name="characters" checked>
+					<img src="images/char-boy.png" alt="boy character" >
+				</label>
 			</li>
 			<li id="images/char-cat-girl.png" class="player-image">
-				<img src="images/char-cat-girl.png" alt="cat girl character">
+				<label>
+					<input type="radio" name="characters">
+					<img src="images/char-cat-girl.png" alt="cat girl character">	
+				</label>
 			</li>
 			<li id="images/char-horn-girl.png" class="player-image">
-				<img id="character3" src="images/char-horn-girl.png" alt="horn girl character">
+				<label>
+					<input type="radio" name="characters">
+					<img id="character3" src="images/char-horn-girl.png" alt="horn girl character">
+				</label>
 			</li>
 			<li id="images/char-pink-girl.png" class="player-image">
-				<img src="images/char-pink-girl.png" alt="pink girl character">
+				<label>
+					<input type="radio" name="characters">
+					<img src="images/char-pink-girl.png" alt="pink girl character">
+				</label>
 			</li>
 			<li id="images/char-princess-girl.png" class="player-image">
-				<img src="images/char-princess-girl.png" alt="princess girl character">
+				<label>
+					<input type="radio" name="characters">
+					<img src="images/char-princess-girl.png" alt="princess girl character">
+				</label>
+				
 			</li>
 		</ul>
 		<button id="play-button">Play Game</button>
 	</div>
-	<div class="game-over hide">
+	<div class="game-over hide" tabindex="-1">
 		<h2 class="over-title">Game over!</h2>
 		<p class="over-text">Score: <span class="score-text-over">0</span></p>
 		<p id="over-text-message" class="over-text">Nice job!</p>

@@ -118,7 +118,9 @@ function gameOver() {
     // remove keyup listener
     document.removeEventListener('keyup', listenerFunc);
 
+    // open and focus on game over modal
     document.querySelector('.game-over').classList.remove('hide');
+    document.querySelector('.game-over').focus();
 
     // update game over text
     document.getElementById('over-text-message').innerHTML = `Nice job, ${playerName}!`;
@@ -259,6 +261,8 @@ function listenerFunc(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 };
 
+// focus on new game window upon startup
+document.querySelector('.player-select').focus();
 
 const players = document.querySelectorAll('.player-image');
 const selected = [players[0]]; // selected defaults with first character
@@ -304,8 +308,10 @@ playButton.addEventListener('click', function(e) {
 const playAgainButton = document.getElementById('play-again');
 
 function playAgain() {
+    // close game over window and open new game window
     document.querySelector('.game-over').classList.add('hide');
     document.querySelector('.player-select').classList.remove('hide');
+    document.querySelector('.player-select').focus();
 
     // reset and redisplay lives and score counters
     livesCounter = 10; 
