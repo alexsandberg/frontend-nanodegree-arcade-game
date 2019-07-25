@@ -222,10 +222,10 @@ allEnemies.push(enemy3);
 // Place the player object in a variable called player
 
 // check for collisions between player and enemies
-function checkCollisions() {
+function checkCollisions(array) {
     const [playerX, playerY] = player.getPosition();
 
-    for(let enemy of allEnemies) {
+    for(let enemy of array) {
         const [enemyX, enemyY] = enemy.getPosition();
 
         // when a collision takes place
@@ -247,6 +247,69 @@ function checkCollisions() {
 
 let winCounter = 0;
 let livesCounter = 10;
+
+//234, 151, 68
+
+const gameCoordinates = 
+    [[20,266],[20,183],[20,100],
+    [120,266],[120,183],[120,100],
+    [220,266],[220,183],[220,100],
+    [320,266],[320,183],[320,100],
+    [420,266],[420,183],[420,100]];
+
+let allGems = [];
+
+const blue = 'images/Gem Blue.png';
+const green = 'images/Gem Green.png';
+const orange = 'images/Gem Orange.png';
+
+class Gem {
+    constructor(sprite,x,y) {
+        this.sprite = sprite;
+        this.x = x;
+        this.y = y;
+    }
+
+    // Draw the enemy on the screen, required method for game
+    render() {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+}
+
+// get random positon for gem placement
+function randomPos() {
+    let gridPos = randomGemNum(15); // 15 possible positions
+    let [x,y] = gameCoordinates[gridPos];
+    return [x,y];
+}
+
+function randomGemNum(num) {
+    return Math.floor(Math.random() * num);
+}
+
+// add random gems
+function addGems() {
+    // blue gems
+    if(randomGemNum(1000)===29) {
+        let [x,y] = randomPos();
+        let blueGem = new Gem(blue,x,y);
+        allGems.push(blueGem);
+    }
+
+    // green gems
+    if(randomGemNum(5000)===29) {
+        let [x,y] = randomPos();
+        let greenGem = new Gem(green,x,y);
+        allGems.push(greenGem);
+    }
+
+    // orange gems
+    if(randomGemNum(8000)===29) {
+        let [x,y] = randomPos();
+        let orangeGem = new Gem(orange,x,y);
+        allGems.push(orangeGem);
+    }
+}
 
 
 // This listens for key presses and sends the keys to your
