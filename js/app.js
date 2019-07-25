@@ -225,22 +225,30 @@ allEnemies.push(enemy3);
 function checkCollisions(array) {
     const [playerX, playerY] = player.getPosition();
 
-    for(let enemy of array) {
-        const [enemyX, enemyY] = enemy.getPosition();
+    for(let sprite of array) {
+        const [spriteX, spriteY] = sprite.getPosition();
 
         // when a collision takes place
-        if((Math.abs(playerX-enemyX)<80) && (Math.abs(playerY-enemyY)<50)) {
-            // decrement the lives counter
-            livesCounter--;
-            document.querySelector('.lives-text').innerHTML = livesCounter;
+        if((Math.abs(playerX-spriteX)<80) && (Math.abs(playerY-spriteY)<50)) {
+            
+            if(array===allEnemies) {
+                // decrement the lives counter
+                livesCounter--;
+                document.querySelector('.lives-text').innerHTML = livesCounter;
 
-            if(livesCounter===0) {
+                if(livesCounter===0) {
                 setTimeout(function() {
                     gameOver();
                 }, 100);
+                }
+                // reset player position
+                player.reset();
             }
-            // reset player position
-            player.reset();
+
+            if(array===allGems) {
+                console.log('Got a gem!');
+            }
+            
         }
     }
 }
@@ -273,6 +281,12 @@ class Gem {
     // Draw the enemy on the screen, required method for game
     render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+
+    // get the enemy position
+    getPosition() {
+        const position = [this.x, this.y];
+        return position;
     }
 }
 
