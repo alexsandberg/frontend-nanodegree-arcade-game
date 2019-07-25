@@ -55,6 +55,7 @@ class Player {
                     break;
                 } else {
                     this.x = this.x - 100;
+                    //getGridPos(this.x,this.y);
                     break;
                 }
             }
@@ -63,6 +64,7 @@ class Player {
                     break;
                 } else {
                     this.y = this.y - 83;
+                    //getGridPos(this.x,this.y);
                     if(this.y<68) {
                         winGame();
                     }
@@ -74,6 +76,7 @@ class Player {
                     break;
                 } else {
                     this.x = this.x + 100;
+                   // getGridPos(this.x,this.y);
                     break;
                 }
             } 
@@ -82,6 +85,7 @@ class Player {
                     break;
                 } else {
                     this.y = this.y + 83;
+                    //getGridPos(this.x,this.y);
                     break;
                 }
             }
@@ -95,19 +99,28 @@ class Player {
 
 let player = new Player();
 
+function scoreText(score) {
+    const winText = document.querySelector('.win-title');
+
+    // set title text
+    winText.innerHTML = `Score +${score}!`
+
+    // show score title
+    winText.classList.remove('hide');
+    winText.classList.add('win');
+
+    setTimeout(function() {
+        winText.classList.add('hide');
+        winText.classList.remove('win');
+    }, 1500);
+}
+
 // win function is called when water is reached
 function winGame() {
     winCounter++;
     document.querySelector('.score-text').innerHTML = winCounter;
 
-    // show score +1 title
-    document.querySelector('.win-title').classList.remove('hide');
-    document.querySelector('.win-title').classList.add('win');
-
-    setTimeout(function() {
-        document.querySelector('.win-title').classList.add('hide');
-        document.querySelector('.win-title').classList.remove('win');
-    }, 1500);
+    scoreText(1);
 
     setTimeout(function() {
         // alert('You win!');
@@ -246,7 +259,8 @@ function checkCollisions(array) {
             }
 
             if(array===allGems) {
-                console.log('Got a gem!');
+                // determine gem color and remove gem
+                gemPoints(getGridPos(player.x, player.y));
             }
             
         }
@@ -272,6 +286,77 @@ let activeGrid =
     [320,100,9],[320,183,10],[320,266,11],
     [420,100,12],[420,183,13],[420,266,14]];
 
+// returns the grid position of player
+function getGridPos(x,y) {
+    if((x===0)&&(y===68)) {
+        return 0;
+    } else if ((x===0)&&(y===151)) {
+        return 1;
+    } else if ((x===0)&&(y===234)) {
+        return 2;
+    } else if ((x===100)&&(y===68)) {
+        return 3;
+    } else if ((x===100)&&(y===151)) {
+        return 4;
+    } else if ((x===100)&&(y===234)) {
+        return 5;
+    } else if ((x===200)&&(y===68)) {
+        return 6;
+    } else if ((x===200)&&(y===151)) {
+        return 7;
+    } else if ((x===200)&&(y===234)) {
+        return 8;
+    } else if ((x===300)&&(y===68)) {
+        return 9;
+    } else if ((x===300)&&(y===151)) {
+        return 10;
+    } else if ((x===300)&&(y===234)) {
+        return 11;
+    } else if ((x===400)&&(y===68)) {
+        return 12;
+    } else if ((x===400)&&(y===151)) {
+        return 13;
+    } else if ((x===400)&&(y===234)) {
+        return 14;
+    }
+}
+
+// compare player position to gem to get gem color (points)
+function gemPoints(playerPos) {
+    let color;
+    for(let i=0; i<allGems.length; i++) {
+        if(allGems[i].getIndex()===playerPos) {
+            color = allGems[i].getColor();
+
+            // remove the gem and reset activeGrid
+            allGems.splice(i,1); 
+            activeGrid[i] = gameCoordinates[i];
+        }
+    }
+
+    switch(color) {
+        case 'blue': {
+            winCounter++;
+            document.querySelector('.score-text').innerHTML = winCounter;
+            scoreText(1);
+            break;
+        }
+        case 'green': {
+            winCounter = winCounter + 3;
+            document.querySelector('.score-text').innerHTML = winCounter;
+            scoreText(3);
+            break;
+        }
+        case 'orange': {
+            winCounter = winCounter + 5;
+            document.querySelector('.score-text').innerHTML = winCounter;
+            scoreText(5);
+            break;
+        }
+
+    }
+}
+
 let allGems = [];
 
 const blue = 'images/Gem Blue.png';
@@ -279,10 +364,12 @@ const green = 'images/Gem Green.png';
 const orange = 'images/Gem Orange.png';
 
 class Gem {
-    constructor(sprite,x,y) {
+    constructor(color, sprite,x,y,gridIndex) {
+        this.color = color;
         this.sprite = sprite;
         this.x = x;
         this.y = y;
+        this.gridIndex = gridIndex;
     }
 
     // Draw the enemy on the screen, required method for game
@@ -294,6 +381,14 @@ class Gem {
     getPosition() {
         const position = [this.x, this.y];
         return position;
+    }
+
+    getColor() {
+        return this.color;
+    }
+
+    getIndex() {
+        return this.gridIndex;
     }
 }
 
@@ -332,7 +427,7 @@ function addGems() {
         let pos = randomPos();
         if(!(pos===null)) {
             let [x,y,gridIndex] = pos;
-            let blueGem = new Gem(blue,x,y);
+            let blueGem = new Gem('blue',blue,x,y,gridIndex);
             allGems.push(blueGem);
 
             // remove gem after 30 sec
@@ -346,7 +441,7 @@ function addGems() {
         let pos = randomPos();
         if(!(pos===null)) {
             let [x,y,gridIndex] = pos;
-            let greenGem = new Gem(green,x,y);
+            let greenGem = new Gem('green',green,x,y,gridIndex);
             allGems.push(greenGem);
 
             // remove gem after 30 sec
@@ -360,7 +455,7 @@ function addGems() {
         let pos = randomPos();
         if(!(pos===null)) {
             let [x,y,gridIndex] = pos;
-            let orangeGem = new Gem(orange,x,y);
+            let orangeGem = new Gem('orange',orange,x,y,gridIndex);
             allGems.push(orangeGem);
 
             // remove gem after 30 sec
