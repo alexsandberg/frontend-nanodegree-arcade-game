@@ -112,6 +112,7 @@ function winGame() {
 
 // game over
 function gameOver() {
+    //debugger;
     // alert('Game over!')
     document.querySelector('.game-over').classList.remove('hide');
 
@@ -327,14 +328,15 @@ function gameMode() {
     }
 }
 
+
 // class for creating leaderboards
 class Leaderboard {
-    constructor() {
-        this.topScores = new Map();
+    constructor(topScores) {
+        this.topScores = [];
     }
 
-    setScores(playerName, winCounter) {
-        this.topScores.set(playerName, winCounter);
+    setScores(playerName, winCounter) {     ////////// fix this method
+        this.topScores.push([playerName, winCounter]);
     }
 
     getScores() {
@@ -346,63 +348,107 @@ class Leaderboard {
 const topScoresNormal = new Leaderboard();
 const topScoresHard = new Leaderboard();
 
-// function for storing scores
-// function topScores() {
-//     const leaderboard = new Map();
+// topScoresNormal.setScores('test1', 10);
+// topScoresNormal.setScores('test2', 10);
+// topScoresNormal.setScores('test3', 10);
+// topScoresNormal.setScores('test4', 10);
 
-//     return function(playerName, winCounter) {
-//             leaderboard.set(playerName, winCounter);
+// compare score to top scores
+// function checkScores(score,board) {
+//     if(board.size<5) {
+//         board.setScores(playerName, score);
+//     } else {
+//         let values =[ ...board.values() ];
+//         for(let value of values) {
+//             if (score>value) {
+//                 board.setScores(playerName, score);
+//                 break;
+//             }
 //         }
+//     }
 // }
-
-// let setScores = topScores();
-
 
 let leaderTableNormal = document.querySelector('.leader-table-normal');
 let leaderTableHard = document.querySelector('.leader-table-hard');
-let tableNormalHead = leaderTableNormal.createTHead();
-let tableHardHead = leaderTableHard.createTHead();
 
 // sort the leaderboard based on score (value)
-function scoresSort(board) {
-    let leaderSorted = new Map([...board.entries()].sort((a, b) => b[1] - a[1]));
+function scoresSort(topScores) {
+    let leaderSorted = topScores.sort(function(a, b){return b - a});
+
+    //only keep top 5
+    if(!(leaderSorted[5]===undefined)) {
+        leaderSorted.splice(5,1);
+    }
     return leaderSorted;
 } 
 
 
 // display leaderboard 
-function displayLeaderboard(board) {
-    let keys =[ ...board.keys() ];
-    let values =[ ...board.values() ];
+function displayLeaderboard(sortedScores) {
+    //debugger;
+    let names =[];
+    let scores =[];
+
+    for(let score of sortedScores) {
+        names.push(score[0,0]);
+        scores.push(score[0,1]);
+    }
 
     let currentHead;
     let currentTable;
+
+    // set the current table
     if(difficulty===true) {
-        currentHead = tableNormalHead;
         currentTable = leaderTableNormal;
     } else {
-        currentHead = tableHardHead;
         currentTable = leaderTableHard;
     }
 
-    for(let i=1; i<6; i++) {
+    // clear current table children
+    while (currentTable.firstChild) {
+        currentTable.removeChild(currentTable.firstChild);
+    }
+    
+    let tableNormalHead = leaderTableNormal.createTHead();
+    let tableHardHead = leaderTableHard.createTHead();
+   
+    // set the current head
+    if(difficulty===true) {
+        currentHead = tableNormalHead;
+    } else {
+        currentHead = tableHardHead;
+    }
+    
+    // create and add table header
+    let header = currentHead.insertRow();
+    header.id = 'table-header';
+    let blank = document.createElement('td');
+    let nameTitle = document.createElement('td');
+    let scoreTitle = document.createElement('td');
+    nameTitle.innerHTML = 'Name';
+    scoreTitle.innerHTML = 'Score';
+    header.appendChild(blank);
+    header.appendChild(nameTitle);
+    header.appendChild(scoreTitle);
+
+    for(let i=1; i<(sortedScores.length+1); i++) { ///////////////////////////////
         let entry = currentHead.insertRow();
         let number = document.createElement('td');
         let name = document.createElement('td');
         let score = document.createElement('td');
         
         number.innerHTML = `${i}.`;
-        name.innerHTML = keys[i-1];
-        score.innerHTML = values[i-1];
+        name.innerHTML = names[i-1];
+        score.innerHTML = scores[i-1];
 
         entry.appendChild(number);
         entry.appendChild(name);
         entry.appendChild(score);
         currentTable.appendChild(entry);
 
-        if(keys[i]===undefined) {
-            break;
-        }
+        // if(keys[i]===undefined) {
+        //     break;
+        // }
     }
 }
 
