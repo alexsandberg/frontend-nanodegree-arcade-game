@@ -114,7 +114,7 @@ function winGame() {
 function gameOver() {
     // increment gameCounter
     gameCounter++;
-    
+
     // alert('Game over!')
     document.querySelector('.game-over').classList.remove('hide');
 
@@ -123,11 +123,11 @@ function gameOver() {
 
     // set score and display sorted leaderboards
     if(difficulty===true) {
-        topScoresNormal.setScores(playerName, winCounter);
+        topScoresNormal.setScores(winCounter, playerName);
         displayLeaderboard(scoresSort(topScoresNormal.getScores())); 
 
     } else {
-        topScoresHard.setScores(playerName, winCounter);
+        topScoresHard.setScores(winCounter, playerName);
         displayLeaderboard(scoresSort(topScoresHard.getScores()));
     }   
 }
@@ -337,8 +337,8 @@ class Leaderboard {
         this.topScores = [];
     }
 
-    setScores(playerName, winCounter) {     ////////// fix this method
-        this.topScores.push([playerName, winCounter]);
+    setScores(winCounter, playerName) {    
+        this.topScores.push([winCounter, playerName]);
     }
 
     getScores() {
@@ -375,7 +375,8 @@ let leaderTableHard = document.querySelector('.leader-table-hard');
 
 // sort the leaderboard based on score (value)
 function scoresSort(topScores) {
-    let leaderSorted = topScores.sort(function(a, b){return b - a});
+    let leaderSorted = topScores.sort();
+    leaderSorted = leaderSorted.reverse();
 
     //only keep top 5
     if(!(leaderSorted[5]===undefined)) {
@@ -392,8 +393,8 @@ function displayLeaderboard(sortedScores) {
     let scores =[];
 
     for(let score of sortedScores) {
-        names.push(score[0,0]);
-        scores.push(score[0,1]);
+        scores.push(score[0,0]);
+        names.push(score[0,1]);
     }
 
     let currentHead;
