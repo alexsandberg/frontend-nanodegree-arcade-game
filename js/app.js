@@ -1,24 +1,19 @@
 // Enemies our player must avoid
 class Enemy {
     constructor(x, y, speed) {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
         this.x = x;
         this.y = y;
         this.speed = speed;
         this.sprite = 'images/enemy-bug.png';
     }
 
-    // Update the enemy's position, required method for game
+    // Update the enemy's position
     // Parameter: dt, a time delta between ticks
     update(dt) {
-        // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
     this.x += (dt*this.speed);
     }
 
-    // Draw the enemy on the screen, required method for game
+    // Draw the enemy on the screen
     render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
@@ -38,17 +33,25 @@ class Player {
         this.x = x;
         this.y = y;
     }
+
+    // update the player's position
     update(movementX=this.x, movementY=this.y) {
         this.x = movementX;
         this.y = movementY;
     }
+
+    // draw the player on the screen
     render() {
         ctx.drawImage(Resources.get(this.character), this.x, this.y);
     }
+
+    // reset player to starting position
     reset() {
         this.x = 200;
         this.y = 400;
     }
+
+    // handle keyboard inputs
     handleInput(key) {
         let movement;
         switch(key) {
@@ -93,6 +96,8 @@ class Player {
             }
         }
     }
+
+    // get the current player position
     getPosition() {
         const position = [this.x, this.y];
         return position;
@@ -105,6 +110,7 @@ let tempScores = [];
 
 let scoreTimeout;
 
+// display text popup when player scores
 function scoreText(score) {
     // clear any present timeouts
     clearTimeout(scoreTimeout);
@@ -151,7 +157,7 @@ function winGame() {
     }, 100);
 }
 
-// game over
+// game over actions
 function gameOver() {
     // increment gameCounter
     gameCounter++;
@@ -252,12 +258,7 @@ allEnemies.push(enemy2);
 const enemy3 = new Enemy(-100,230,randomSpeed());
 allEnemies.push(enemy3);
 
-
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
-
-// check for collisions between player and enemies
+// check for collisions between player and enemies or gems
 function checkCollisions(array) {
     const [playerX, playerY] = player.getPosition();
 
@@ -285,7 +286,6 @@ function checkCollisions(array) {
                 // determine gem color and remove gem
                 gemPoints(getGridPos(player.x, player.y));
             }
-            
         }
     }
 }
@@ -293,8 +293,8 @@ function checkCollisions(array) {
 let winCounter = 0;
 let livesCounter = 10;
 
-//234, 151, 68
 
+// arrays for storing canvas coordinates
 const gameCoordinates = 
     [[20,100,0],[20,183,1],[20,266,2],
     [120,100,3],[120,183,4],[120,266,5],
@@ -357,6 +357,7 @@ function gemPoints(playerPos) {
         }
     }
 
+    // add points based on gem color
     switch(color) {
         case 'blue': {
             winCounter++;
@@ -382,10 +383,12 @@ function gemPoints(playerPos) {
 
 let allGems = [];
 
+// load gems
 const blue = 'images/Gem Blue.png';
 const green = 'images/Gem Green.png';
 const orange = 'images/Gem Orange.png';
 
+// Gem object class
 class Gem {
     constructor(color, sprite,x,y,gridIndex) {
         this.color = color;
@@ -395,21 +398,23 @@ class Gem {
         this.gridIndex = gridIndex;
     }
 
-    // Draw the enemy on the screen, required method for game
+    // Draw the gem on the screen
     render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 
-    // get the enemy position
+    // get the gem position
     getPosition() {
         const position = [this.x, this.y];
         return position;
     }
 
+    // get the gem's color
     getColor() {
         return this.color;
     }
 
+    // get the gem's index
     getIndex() {
         return this.gridIndex;
     }
@@ -428,9 +433,9 @@ function randomPos() {
         // console.log('gem skipped');
         return null;
     }
-    
 }
 
+// remove gems from game after time delay
 function removeGems(index,gridIndex) {
     // remove gem after 30 seconds and reset grid place
     setTimeout(function(gemIndex) {
@@ -439,6 +444,7 @@ function removeGems(index,gridIndex) {
     }, 30000);
 }
 
+// random num generator function
 function randomGemNum(num) {
     return Math.floor(Math.random() * num);
 }
@@ -489,12 +495,13 @@ function addGems() {
 }
 
 
-// This listens for key presses and sends the keys to your
+// This listens for key presses and sends the keys to
 // Player.handleInput() method.
 function addListener() {
     document.addEventListener('keyup', listenerFunc);
 }
 
+// function for key listener
 function listenerFunc(e) {
     var allowedKeys = {
         37: 'left',
@@ -512,6 +519,8 @@ document.querySelector('.player-select').focus();
 const players = document.querySelectorAll('.player-image');
 const selected = [players[0]]; // selected defaults with first character
 
+
+// function for choosing player
 function playerSelection(tempPlayer) {
     // toggle selected class
     selected[0].classList.remove('selection');
@@ -531,6 +540,7 @@ for(let tempPlayer of players) {
 let playerName;
 let gameCounter = 1;
 
+// sets player name based on user input
 function setPlayerName() {
     let input = document.getElementById('name').value;
     if(input==="") {
@@ -540,9 +550,9 @@ function setPlayerName() {
     }
 }
 
-// button listeners
 const playButton = document.getElementById('play-button');
 
+// listener for play button
 playButton.addEventListener('click', function(e) {
     document.querySelector('.player-select').classList.add('hide');
     gameMode(); // get game mode
@@ -552,6 +562,7 @@ playButton.addEventListener('click', function(e) {
 
 const playAgainButton = document.getElementById('play-again');
 
+// actions after playAgain button is pressed
 function playAgain() {
     // close game over window and open new game window
     document.querySelector('.game-over').classList.add('hide');
@@ -565,10 +576,12 @@ function playAgain() {
     document.querySelector('.score-text').innerHTML = winCounter;
 }
 
+// play again button listener
 playAgainButton.addEventListener('click', function(e) {
     playAgain();
 })
 
+// set difficulty boolean (normal or hard)
 function setDifficulty(bool) {
     // true for normal mode, false for hard
     let difficulty = bool;
