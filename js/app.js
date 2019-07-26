@@ -617,8 +617,10 @@ let leaderTableHard = document.querySelector('.leader-table-hard');
 
 // sort the leaderboard based on score (value)
 function scoresSort(topScores) {
-    let leaderSorted = topScores.sort();
-    leaderSorted = leaderSorted.reverse();
+    
+    let leaderSorted = topScores.sort(function(a,b) {
+        return b[0] - a[0];
+    });
 
     //only keep top 5
     if(!(leaderSorted[5]===undefined)) {
